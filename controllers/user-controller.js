@@ -92,6 +92,16 @@ class UserController {
     }
   }
 
+  async unLike(req, res, next) {
+    try {
+      const { id, filmId } = req.body;
+      const user = await userService.unLike(id, filmId);
+      return res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   // async changeTheme(req, res, next) {
   //   try {
   //     const { id, theme } = req.body;

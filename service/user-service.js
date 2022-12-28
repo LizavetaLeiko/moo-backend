@@ -94,6 +94,15 @@ class UserService {
 
     return user;
   }
+  async unLike(userId, filmId) {
+    const user = await UserModel.findOne({ _id: userId });
+    if (user && user.likedFilms.includes(filmId)) {
+      const index = likedFilms.indexOf(filmId);
+      user.likedFilms.splice(index, 1);
+      return user;
+    }
+    return user;
+  }
 
   // async changeTheme(userId, theme) {
   //   const user = await UserModel.findOneAndUpdate(
