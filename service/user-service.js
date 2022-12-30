@@ -85,13 +85,17 @@ class UserService {
     return users;
   }
 
+  async getUser(userId) {
+    const user = await UserModel.findOne({ _id: userId });
+    return user;
+  }
+
   async like(userId, filmId) {
     const user = await UserModel.findOne({ _id: userId });
     if (user && !user.likedFilms.includes(filmId)) {
       user.likedFilms.push(filmId);
       return user;
     }
-
     return user;
   }
   async unLike(userId, filmId) {

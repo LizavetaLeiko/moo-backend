@@ -82,6 +82,16 @@ class UserController {
     }
   }
 
+  async getUser(req, res, next) {
+    try {
+      const { id } = req.body;
+      const user = await userService.getUser(id);
+      return res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async like(req, res, next) {
     try {
       const { id, filmId } = req.body;
