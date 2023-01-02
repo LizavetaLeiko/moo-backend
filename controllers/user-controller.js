@@ -18,7 +18,6 @@ class UserController {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        domain: 'moo-henna.vercel.app'
       });
       return res.json(userData);
     } catch (e) {
@@ -35,7 +34,6 @@ class UserController {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        domain: 'moo-henna.vercel.app'
       });
       return res.json(userData);
     } catch (e) {
@@ -73,7 +71,6 @@ class UserController {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        domain: 'moo-henna.vercel.app'
       });
       return res.json(userData);
     } catch (e) {
