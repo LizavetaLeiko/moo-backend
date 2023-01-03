@@ -94,6 +94,7 @@ class UserService {
     const user = await UserModel.findOne({ _id: userId });
     if (user && !user.likedFilms.includes(filmId)) {
       user.likedFilms.push(filmId);
+      user.save();
       return user;
     }
     return user;
@@ -103,6 +104,7 @@ class UserService {
     if (user && user.likedFilms.includes(filmId)) {
       const index = likedFilms.indexOf(filmId);
       user.likedFilms.splice(index, 1);
+      user.save();
       return user;
     }
     return user;
