@@ -104,7 +104,7 @@ class UserService {
     if (user && user.likedFilms.includes(filmId)) {
       const index = likedFilms.indexOf(filmId);
       user.likedFilms.splice(index, 1);
-      
+      user.save();
       return user;
     }
     return user;
