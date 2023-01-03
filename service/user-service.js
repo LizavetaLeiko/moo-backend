@@ -93,8 +93,8 @@ class UserService {
   async like(userId, filmId) {
     const user = await UserModel.findOne({ _id: userId });
     if (user && !user.likedFilms.includes(filmId)) {
-      user.likedFilms = [...user.likedFilms, filmId];
-      user.save();
+      user.findOneAndUpdate(userId, {$set: {...likedFilms, filmId}}, { new: true })
+      .lean();
       return user;
     }
     return user;
