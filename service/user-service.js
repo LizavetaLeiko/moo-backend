@@ -93,7 +93,7 @@ class UserService {
   async like(userId, filmId) {
     const user = await UserModel.findOne({ _id: userId });
     if (user && !user.likedFilms.includes(filmId)) {
-      user.likedFilms.push(filmId);
+      user.likedFilms = [...user.likedFilms, filmId];
       user.save();
       return user;
     }
