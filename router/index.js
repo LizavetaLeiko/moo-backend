@@ -18,7 +18,5 @@ router.get('/user/:id', authMiddleware, userController.getUser);
 router.patch('/liked', userController.like);
 router.patch('/unliked', userController.unLike);
 
-// router.patch('/theme', userController.changeTheme);
-
 
 module.exports = router

@@ -117,15 +117,6 @@ class UserController {
     }
   }
 
-  // async changeTheme(req, res, next) {
-  //   try {
-  //     const { id, theme } = req.body;
-  //     const user = await userService.changeTheme(id, theme);
-  //     return res.json(user);
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
 }
 
 module.exports = new UserController();

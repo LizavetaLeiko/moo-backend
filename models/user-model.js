@@ -6,7 +6,6 @@ const UserSchema = new Schema({
   isActivated: { type: Boolean, default: false },
   activationLink: { type: String },
   likedFilms: { type: Array },
-  // theme: { type: String, default: 'dark' },
 });
 
 module.exports = model("User", UserSchema);
