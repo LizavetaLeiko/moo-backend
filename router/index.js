@@ -15,8 +15,8 @@ router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
 router.get('/user/:id', authMiddleware, userController.getUser);
-// router.patch('/liked', userController.like);
-// router.patch('/unliked', userController.unLike);
+router.patch('/liked', userController.like);
+router.patch('/unliked', userController.unLike);
 
 
 module.exports = router

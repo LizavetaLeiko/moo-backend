@@ -5,8 +5,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   isActivated: { type: Boolean, default: false },
   activationLink: { type: String },
-  nickname: { type: String, required: true},
-  // likedFilms: { type: Array },
+  likedFilms: { type: Array },
 });
 
 module.exports = model("User", UserSchema);
