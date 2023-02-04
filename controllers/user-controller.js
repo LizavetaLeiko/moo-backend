@@ -11,8 +11,8 @@ class UserController {
           ApiError.BadRequest("Ошибка при валидации", errors.array())
         );
       }
-      const { email, password } = req.body;
-      const userData = await userService.registration(email, password);
+      const { email, nickname, password } = req.body;
+      const userData = await userService.registration(email, nickname, password);
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -97,25 +97,25 @@ class UserController {
     }
   }
 
-  async like(req, res, next) {
-    try {
-      const { id, filmId } = req.body;
-      const user = await userService.like(id, filmId);
-      return res.json(user);
-    } catch (e) {
-      next(e);
-    }
-  }
+  // async like(req, res, next) {
+  //   try {
+  //     const { id, filmId } = req.body;
+  //     const user = await userService.like(id, filmId);
+  //     return res.json(user);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
 
-  async unLike(req, res, next) {
-    try {
-      const { id, filmId } = req.body;
-      let user = await userService.unLike(id, filmId);
-      return res.json(user);
-    } catch (e) {
-      next(e);
-    }
-  }
+  // async unLike(req, res, next) {
+  //   try {
+  //     const { id, filmId } = req.body;
+  //     let user = await userService.unLike(id, filmId);
+  //     return res.json(user);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
 
 }
 

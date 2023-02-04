@@ -7,11 +7,12 @@ const UserDto = require("../dtos/user-dto");
 const ApiError = require("../exceptions/api-error");
 
 class UserService {
-  async registration(email, password) {
+  async registration(email, nickname, password) {
     const candidate = await UserModel.findOne({ email });
-    if (candidate) {
+    const candidate2 = await UserModel.findOne({ nickname });
+    if (candidate || candidate2) {
       throw ApiError.BadRequest(
-        `Пользователь с почтовым адресом ${email} уже существует`
+        `User with email ${email} or nickname ${nickname} already exists`
       );
     }
     const hashPassword = await bcrypt.hash(password, 3);
@@ -19,6 +20,7 @@ class UserService {
     const user = await UserModel.create({
       email,
       password: hashPassword,
+      nickname,
       activationLink,
     });
     await mailService.sendActivationMail(
@@ -26,7 +28,7 @@ class UserService {
       `${process.env.API_URL}/api/activate/${activationLink}`
     );
 
-    const userDto = new UserDto(user); // id, email, isActivated
+    const userDto = new UserDto(user); 
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
@@ -45,11 +47,11 @@ class UserService {
   async login(email, password) {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      throw ApiError.BadRequest("Пользователь с таким email не найден");
+      throw ApiError.BadRequest("User with this email not found");
     }
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
-      throw ApiError.BadRequest("Неверный пароль");
+      throw ApiError.BadRequest("Incorrect password");
     }
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
@@ -90,25 +92,25 @@ class UserService {
     return user;
   }
 
-  async like(userId, filmId) {
-    const user = await UserModel.findOne({ _id: userId });
-    if (user && !user.likedFilms.includes(filmId)) {
-      user.likedFilms.push(filmId);
-      user.save();
-      return user;
-    }
-    return user;
-  }
-  async unLike(userId, filmId) {
-    const user = await UserModel.findOne({ _id: userId });
-    if (user && user.likedFilms.includes(filmId)) {
-      let index = user.likedFilms.indexOf(filmId);
-      user.likedFilms.splice(index, 1);
-      user.save();
-      return user;
-    }
-    return user;
-  }
+  // async like(userId, filmId) {
+  //   const user = await UserModel.findOne({ _id: userId });
+  //   if (user && !user.likedFilms.includes(filmId)) {
+  //     user.likedFilms.push(filmId);
+  //     user.save();
+  //     return user;
+  //   }
+  //   return user;
+  // }
+  // async unLike(userId, filmId) {
+  //   const user = await UserModel.findOne({ _id: userId });
+  //   if (user && user.likedFilms.includes(filmId)) {
+  //     let index = user.likedFilms.indexOf(filmId);
+  //     user.likedFilms.splice(index, 1);
+  //     user.save();
+  //     return user;
+  //   }
+  //   return user;
+  // }
 
 }
 
